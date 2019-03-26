@@ -442,6 +442,31 @@ uint32_t httpCallHandler(void* raw_context, uint32_t uri_ptr, uint32_t uri_size,
 uint32_t getTotalMemoryHandler(void*) { return 0x7FFFFFFF; }
 uint32_t _emscripten_get_heap_sizeHandler(void*) { return 0x7FFFFFFF; }
 void _llvm_trapHandler(void*) { throw WasmException("emscripten llvm_trap"); }
+void ___cxa_pure_virtualHandler(void*) { throw WasmException("emscripten llvm_trap"); }
+void ___buildEnvironmentHandler(void*, uint32_t) { throw WasmException("emscripten build environment"); }
+uint32_t ___cxa_uncaught_exceptionHandler(void*) { return 0x7FFFFFFF; }
+uint32_t ___map_fileHandler(void*, uint32_t, uint32_t) { return 0x7FFFFFFF; }
+uint32_t ___syscall192Handler(void*, uint32_t, uint32_t) { return 0x7FFFFFFF; }
+uint32_t ___syscall221Handler(void*, uint32_t, uint32_t) { return 0x7FFFFFFF; }
+uint32_t ___syscall3Handler(void*, uint32_t, uint32_t) { return 0x7FFFFFFF; }
+uint32_t ___syscall5Handler(void*, uint32_t, uint32_t) { return 0x7FFFFFFF; }
+uint32_t ___syscall91Handler(void*, uint32_t, uint32_t) { return 0x7FFFFFFF; }
+uint32_t _clock_gettimeHandler(void*, uint32_t, uint32_t) { return 0x7FFFFFFF; }
+uint32_t _getenvHandler(void*, uint32_t) { return 0x7FFFFFFF; }
+uint32_t _getpagesizeHandler(void*) { return 0x7FFFFFFF; }
+uint32_t _gmtime_rHandler(void*, uint32_t, uint32_t) { return 0x7FFFFFFF; }
+void _llvm_stackrestoreHandler(void*, uint32_t) { throw WasmException("emscripten stack restore"); }
+uint32_t _llvm_stacksaveHandler(void*) { return 0x7FFFFFFF; }
+uint32_t _localtime_rHandler(void*, uint32_t, uint32_t) { return 0x7FFFFFFF; }
+uint32_t _mktimeHandler(void*, uint32_t) { return 0x7FFFFFFF; }
+uint32_t _nanosleepHandler(void*, uint32_t, uint32_t) { return 0x7FFFFFFF; }
+uint32_t _sched_yieldHandler(void*) { return 0x7FFFFFFF; }
+uint32_t _strftimeHandler(void*, uint32_t, uint32_t, uint32_t, uint32_t) { return 0x7FFFFFFF; }
+uint32_t _pthread_cond_initHandler(void*, uint32_t, uint32_t) { return 0x7FFFFFFF; }
+uint32_t _pthread_cond_signalHandler(void*, uint32_t) { return 0x7FFFFFFF; }
+uint32_t _pthread_cond_timedwaitHandler(void*, uint32_t, uint32_t, uint32_t) { return 0x7FFFFFFF; }
+uint32_t _pthread_createHandler(void*, uint32_t, uint32_t, uint32_t, uint32_t) { return 0x7FFFFFFF; }
+uint32_t _pthread_mutex_initHandler(void*, uint32_t, uint32_t) { return 0x7FFFFFFF; }
 
 void setTickPeriodMillisecondsHandler(void* raw_context, uint32_t tick_period_milliseconds) {
   WASM_CONTEXT(raw_context)->setTickPeriod(std::chrono::milliseconds(tick_period_milliseconds));
@@ -958,6 +983,31 @@ void Wasm::registerCallbacks() {
     _REGISTER(getTotalMemory);
     _REGISTER(_emscripten_get_heap_size);
     _REGISTER(_llvm_trap);
+    _REGISTER(___cxa_pure_virtual);
+    _REGISTER(___buildEnvironment);
+    _REGISTER(___cxa_uncaught_exception);
+    _REGISTER(___map_file);
+    _REGISTER(___syscall192);
+    _REGISTER(___syscall221);
+    _REGISTER(___syscall3);
+    _REGISTER(___syscall5);
+    _REGISTER(___syscall91);
+    _REGISTER(_clock_gettime);
+    _REGISTER(_getenv);
+    _REGISTER(_getpagesize);
+    _REGISTER(_gmtime_r);
+    _REGISTER(_llvm_stackrestore);
+    _REGISTER(_llvm_stacksave);
+    _REGISTER(_localtime_r);
+    _REGISTER(_mktime);
+    _REGISTER(_nanosleep);
+    _REGISTER(_sched_yield);
+    _REGISTER(_strftime);
+    _REGISTER(_pthread_cond_init);
+    _REGISTER(_pthread_cond_signal);
+    _REGISTER(_pthread_cond_timedwait);
+    _REGISTER(_pthread_create);
+    _REGISTER(_pthread_mutex_init);
   }
 #undef _REGISTER
 

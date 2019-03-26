@@ -256,7 +256,10 @@ struct Wavm : public WasmVm {
   _REGISTER_CALLBACK(WasmCallback4Void);
   _REGISTER_CALLBACK(WasmCallback5Void);
   _REGISTER_CALLBACK(WasmCallback0Int);
+  _REGISTER_CALLBACK(WasmCallback1Int);
+  _REGISTER_CALLBACK(WasmCallback2Int);
   _REGISTER_CALLBACK(WasmCallback3Int);
+  _REGISTER_CALLBACK(WasmCallback4Int);
   _REGISTER_CALLBACK(WasmCallback5Int);
   _REGISTER_CALLBACK(WasmCallback9Int);
 #undef _REGISTER_CALLBACK

@@ -54,7 +54,10 @@ using WasmCallback3Void = void (*)(void*, uint32_t, uint32_t, uint32_t);
 using WasmCallback4Void = void (*)(void*, uint32_t, uint32_t, uint32_t, uint32_t);
 using WasmCallback5Void = void (*)(void*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 using WasmCallback0Int = uint32_t (*)(void*);
+using WasmCallback1Int = uint32_t (*)(void*, uint32_t);
+using WasmCallback2Int = uint32_t (*)(void*, uint32_t, uint32_t);
 using WasmCallback3Int = uint32_t (*)(void*, uint32_t, uint32_t, uint32_t);
+using WasmCallback4Int = uint32_t (*)(void*, uint32_t, uint32_t, uint32_t, uint32_t);
 using WasmCallback5Int = uint32_t (*)(void*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 using WasmCallback9Int = uint32_t (*)(void*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,
                                       uint32_t, uint32_t, uint32_t, uint32_t);
@@ -475,7 +478,13 @@ public:
   virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
                                 WasmCallback0Int f) PURE;
   virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
+                                WasmCallback1Int f) PURE;
+  virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
+                                WasmCallback2Int f) PURE;
+  virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
                                 WasmCallback3Int f) PURE;
+  virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
+                                WasmCallback4Int f) PURE;
   virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
                                 WasmCallback5Int f) PURE;
   virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
