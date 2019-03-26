@@ -11,8 +11,6 @@ if [[ `uname` == "Darwin" ]]; then
   PLATFORM="x86_64-apple-darwin"
   SHA256=0ef8e99e9c9b262a53ab8f2821e2391d041615dd3f3ff36fdf5370916b0f4268
 else
-  CC="clang-7"
-  CXX="clang++-7"
   VERSION=6.0.1
   PLATFORM="x86_64-linux-gnu-ubuntu-16.04"
   SHA256=7ea204ecd78c39154d72dfc0d4a79f7cce1b2264da2551bb2eef10e266d54d91
@@ -47,11 +45,6 @@ build_type=RelWithDebInfo
 # Always build with clang.
 cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX:PATH="$THIRDPARTY_BUILD" \
   -DCMAKE_BUILD_TYPE="$build_type" \
-  -DCMAKE_CXX_COMPILER:STRING="${CXX}" \
-  -DCMAKE_C_COMPILER:STRING="${CC}" \
-  -DCMAKE_CXX_FLAGS:STRING="${CXXFLAGS} ${CPPFLAGS}" \
-  -DCMAKE_C_FLAGS:STRING="${CFLAGS} ${CPPFLAGS}" \
-  -DLLVM_DIR:STRING="$THIRDPARTY_BUILD/lib/llvm-6.0/lib/cmake/llvm/" \
   -DWAVM_ENABLE_STATIC_LINKING:BOOL=ON \
   -DWAVM_ENABLE_RELEASE_ASSERTS:BOOL=ON \
   ..
