@@ -54,6 +54,7 @@ using WasmCallback3Void = void (*)(void*, uint32_t, uint32_t, uint32_t);
 using WasmCallback4Void = void (*)(void*, uint32_t, uint32_t, uint32_t, uint32_t);
 using WasmCallback5Void = void (*)(void*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 using WasmCallback0Int = uint32_t (*)(void*);
+using WasmCallback0Int64 = uint64_t (*)(void*);
 using WasmCallback3Int = uint32_t (*)(void*, uint32_t, uint32_t, uint32_t);
 using WasmCallback5Int = uint32_t (*)(void*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 using WasmCallback9Int = uint32_t (*)(void*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,
@@ -110,6 +111,7 @@ public:
   //
   virtual void scriptLog(spdlog::level::level_enum level, absl::string_view message);
   virtual void setTickPeriod(std::chrono::milliseconds tick_period);
+  virtual uint64_t getCurrentTimeMilliseconds();
 
   //
   // AccessLog::Instance
@@ -296,6 +298,7 @@ public:
 
   void setTickPeriod(std::chrono::milliseconds tick_period);
   void tickHandler();
+  uint64_t getCurrentTimeMilliseconds();
 
   uint32_t allocContextId();
 
@@ -357,6 +360,7 @@ private:
   std::shared_ptr<Context> general_context_; // Context unrelated to any specific stream.
   std::chrono::milliseconds tick_period_;
   Event::TimerPtr timer_;
+  TimeSource& time_source_;
 
   // Calls into the VM.
   WasmCall0Void onStart_;
@@ -473,6 +477,8 @@ public:
                                 WasmCallback5Void f) PURE;
   virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
                                 WasmCallback0Int f) PURE;
+  virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
+                                WasmCallback0Int64 f) PURE;
   virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
                                 WasmCallback3Int f) PURE;
   virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,

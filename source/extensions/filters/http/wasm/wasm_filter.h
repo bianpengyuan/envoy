@@ -23,7 +23,9 @@ public:
   FilterConfig(const envoy::config::filter::http::wasm::v2::Wasm& proto_config,
                Server::Configuration::FactoryContext& context);
 
-  std::shared_ptr<Context> createFilter() { return tls_slot_->getTyped<Wasm>().createContext(); }
+  std::shared_ptr<Context> createFilter() {
+    return tls_slot_->getTyped<Wasm>().createContext();
+  }
 
 private:
   ThreadLocal::SlotPtr tls_slot_;
