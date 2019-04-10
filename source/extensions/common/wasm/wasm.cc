@@ -516,8 +516,8 @@ void setTickPeriodMillisecondsHandler(void* raw_context, uint32_t tick_period_mi
   WASM_CONTEXT(raw_context)->setTickPeriod(std::chrono::milliseconds(tick_period_milliseconds));
 }
 
-uint64_t getCurrentTimeMillisecondsHandler(void* raw_context) {
-  return WASM_CONTEXT(raw_context)->getCurrentTimeMilliseconds();
+uint64_t getCurrentTimeNanosecondsHandler(void* raw_context) {
+  return WASM_CONTEXT(raw_context)->getCurrentTimeNanoseconds();
 }
 
 void logHandler(void* raw_context, uint32_t level, uint32_t address, uint32_t size) {
@@ -621,8 +621,8 @@ void Context::setTickPeriod(std::chrono::milliseconds tick_period) {
   wasm_->setTickPeriod(tick_period);
 }
 
-uint64_t Context::getCurrentTimeMilliseconds() {
-  return wasm_->getCurrentTimeMilliseconds();
+uint64_t Context::getCurrentTimeNanoseconds() {
+  return wasm_->getCurrentTimeNanoseconds();
 }
 
 // Shared Data
@@ -1240,7 +1240,7 @@ void Wasm::registerCallbacks() {
   _REGISTER_PROXY(httpCall);
 
   _REGISTER_PROXY(setTickPeriodMilliseconds);
-  _REGISTER_PROXY(getCurrentTimeMilliseconds);
+  _REGISTER_PROXY(getCurrentTimeNanoseconds);
 
   _REGISTER_PROXY(defineMetric);
   _REGISTER_PROXY(incrementMetric);
@@ -1363,8 +1363,8 @@ void Wasm::tickHandler() {
   }
 }
 
-uint64_t Wasm::getCurrentTimeMilliseconds() {
-  return std::chrono::duration_cast<std::chrono::milliseconds>(time_source_.systemTime().time_since_epoch()).count();
+uint64_t Wasm::getCurrentTimeNanoseconds() {
+  return std::chrono::duration_cast<std::chrono::nanoseconds>(time_source_.systemTime().time_since_epoch()).count();
 }
 
 uint32_t Wasm::allocContextId() { return next_context_id_++; }

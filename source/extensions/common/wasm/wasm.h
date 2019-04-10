@@ -135,7 +135,7 @@ public:
   //
   virtual void scriptLog(spdlog::level::level_enum level, absl::string_view message);
   virtual void setTickPeriod(std::chrono::milliseconds tick_period);
-  virtual uint64_t getCurrentTimeMilliseconds();
+  virtual uint64_t getCurrentTimeNanoseconds();
 
   //
   // AccessLog::Instance
@@ -342,7 +342,7 @@ public:
 
   void setTickPeriod(std::chrono::milliseconds tick_period);
   void tickHandler();
-  uint64_t getCurrentTimeMilliseconds();
+  uint64_t getCurrentTimeNanoseconds();
 
   uint32_t allocContextId();
 
