@@ -294,7 +294,7 @@ void Router::onUpstreamData(Buffer::Instance& data, bool end_stream) {
                                                   *upstream_request_->upgrade_response_);
 
     upstream_request_->upgrade_response_.reset();
-    upstream_request_->onRequestStart();
+    upstream_request_->onRequestStart(true);
   } else {
     ENVOY_STREAM_LOG(trace, "reading response: {} bytes", *callbacks_, data.length());
 
