@@ -447,6 +447,10 @@ void setTickPeriodMillisecondsHandler(void* raw_context, uint32_t tick_period_mi
   WASM_CONTEXT(raw_context)->setTickPeriod(std::chrono::milliseconds(tick_period_milliseconds));
 }
 
+uint64_t getCurrentTimeMillisecondsHandler(void* raw_context) {
+  return WASM_CONTEXT(raw_context)->getCurrentTimeMilliseconds();
+}
+
 void logHandler(void* raw_context, uint32_t level, uint32_t address, uint32_t size) {
   auto context = WASM_CONTEXT(raw_context);
   context->scriptLog(static_cast<spdlog::level::level_enum>(level),
@@ -525,6 +529,10 @@ const uint8_t* decodeVarint(const uint8_t* pos, const uint8_t* end, uint32_t* ou
 
 void Context::setTickPeriod(std::chrono::milliseconds tick_period) {
   wasm_->setTickPeriod(tick_period);
+}
+
+uint64_t Context::getCurrentTimeMilliseconds() {
+  return wasm_->getCurrentTimeMilliseconds();
 }
 
 // Shared Data
@@ -946,7 +954,8 @@ void Context::onHttpCallResponse(uint32_t token, const Pairs& response_headers,
 
 Wasm::Wasm(absl::string_view vm, absl::string_view id, absl::string_view initial_configuration,
            Upstream::ClusterManager& cluster_manager, Event::Dispatcher& dispatcher)
-    : cluster_manager_(cluster_manager), dispatcher_(dispatcher),
+    : cluster_manager_(cluster_manager), dispatcher_(dispatcher), 
+      time_source_(dispatcher.timeSystem()),
       initial_configuration_(initial_configuration) {
   wasm_vm_ = Common::Wasm::createWasmVm(vm);
   id_ = std::string(id);
@@ -1011,6 +1020,7 @@ void Wasm::registerCallbacks() {
   _REGISTER_PROXY(httpCall);
 
   _REGISTER_PROXY(setTickPeriodMilliseconds);
+  _REGISTER_PROXY(getCurrentTimeMilliseconds);
 #undef _REGISTER_PROXY
 }
 
@@ -1056,7 +1066,7 @@ void Wasm::getFunctions() {
 
 Wasm::Wasm(const Wasm& wasm, Event::Dispatcher& dispatcher)
     : std::enable_shared_from_this<Wasm>(wasm), cluster_manager_(wasm.cluster_manager_),
-      dispatcher_(dispatcher) {
+      dispatcher_(dispatcher), time_source_(dispatcher.timeSystem()) {
   wasm_vm_ = wasm.wasmVm()->clone();
   general_context_ = createContext();
   getFunctions();
@@ -1124,6 +1134,10 @@ void Wasm::tickHandler() {
       timer_->enableTimer(tick_period_);
     }
   }
+}
+
+uint64_t Wasm::getCurrentTimeMilliseconds() {
+  return std::chrono::duration_cast<std::chrono::milliseconds>(time_source_.systemTime().time_since_epoch()).count();
 }
 
 uint32_t Wasm::allocContextId() { return next_context_id_++; }
