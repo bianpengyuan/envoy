@@ -256,7 +256,6 @@ struct Wavm : public WasmVm {
   _REGISTER_CALLBACK(WasmCallback4Void);
   _REGISTER_CALLBACK(WasmCallback5Void);
   _REGISTER_CALLBACK(WasmCallback0Int);
-  _REGISTER_CALLBACK(WasmCallback0Int64);
   _REGISTER_CALLBACK(WasmCallback1Int);
   _REGISTER_CALLBACK(WasmCallback2Int);
   _REGISTER_CALLBACK(WasmCallback3Int);
@@ -265,6 +264,7 @@ struct Wavm : public WasmVm {
   _REGISTER_CALLBACK(WasmCallback_Zjl);
   _REGISTER_CALLBACK(WasmCallback_Zjm);
   _REGISTER_CALLBACK(WasmCallback_mjj);
+  _REGISTER_CALLBACK(WasmCallback_mj);
 #undef _REGISTER_CALLBACK
 
   std::unique_ptr<Global<double>> makeGlobal(absl::string_view moduleName, absl::string_view name,

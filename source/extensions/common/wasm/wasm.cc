@@ -622,7 +622,8 @@ void Context::setTickPeriod(std::chrono::milliseconds tick_period) {
 }
 
 uint64_t Context::getCurrentTimeNanoseconds() {
-  return wasm_->getCurrentTimeNanoseconds();
+  return std::chrono::duration_cast<std::chrono::nanoseconds>(
+    wasm_->time_source_.systemTime().time_since_epoch()).count();
 }
 
 // Shared Data
@@ -1361,10 +1362,6 @@ void Wasm::tickHandler() {
       timer_->enableTimer(tick_period_);
     }
   }
-}
-
-uint64_t Wasm::getCurrentTimeNanoseconds() {
-  return std::chrono::duration_cast<std::chrono::nanoseconds>(time_source_.systemTime().time_since_epoch()).count();
 }
 
 uint32_t Wasm::allocContextId() { return next_context_id_++; }

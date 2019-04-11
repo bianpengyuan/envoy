@@ -56,7 +56,6 @@ using WasmCallback3Void = void (*)(void*, uint32_t, uint32_t, uint32_t);
 using WasmCallback4Void = void (*)(void*, uint32_t, uint32_t, uint32_t, uint32_t);
 using WasmCallback5Void = void (*)(void*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 using WasmCallback0Int = uint32_t (*)(void*);
-using WasmCallback0Int64 = uint64_t (*)(void*);
 using WasmCallback1Int = uint32_t (*)(void*, uint32_t);
 using WasmCallback2Int = uint32_t (*)(void*, uint32_t, uint32_t);
 using WasmCallback3Int = uint32_t (*)(void*, uint32_t, uint32_t, uint32_t);
@@ -67,6 +66,7 @@ using WasmCallback9Int = uint32_t (*)(void*, uint32_t, uint32_t, uint32_t, uint3
 using WasmCallback_Zjl = void (*)(void*, uint32_t, int64_t);
 using WasmCallback_Zjm = void (*)(void*, uint32_t, uint64_t);
 using WasmCallback_mjj = uint64_t (*)(void*, uint32_t);
+using WasmCallback_mj = uint64_t (*)(void*);
 
 // Sadly we don't have enum class inheritance in c++-14.
 enum class StreamType : int { Request = 0, Response = 1, MAX = 1 };
@@ -136,7 +136,7 @@ public:
   virtual void scriptLog(spdlog::level::level_enum level, absl::string_view message);
   virtual void setTickPeriod(std::chrono::milliseconds tick_period);
   virtual uint64_t getCurrentTimeNanoseconds();
-
+  
   //
   // AccessLog::Instance
   //
@@ -342,7 +342,6 @@ public:
 
   void setTickPeriod(std::chrono::milliseconds tick_period);
   void tickHandler();
-  uint64_t getCurrentTimeNanoseconds();
 
   uint32_t allocContextId();
 
@@ -538,8 +537,6 @@ public:
   virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
                                 WasmCallback0Int f) PURE;
   virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
-                                WasmCallback0Int64 f) PURE;
-  virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
                                 WasmCallback1Int f) PURE;
   virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
                                 WasmCallback2Int f) PURE;
@@ -549,6 +546,8 @@ public:
                                 WasmCallback5Int f) PURE;
   virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
                                 WasmCallback9Int f) PURE;
+  virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
+                                WasmCallback_mj f) PURE;
 
   virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
                                 WasmCallback_Zjl f) PURE;
