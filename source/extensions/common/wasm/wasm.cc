@@ -1291,7 +1291,7 @@ void Wasm::getFunctions() {
 
 Wasm::Wasm(const Wasm& wasm, Event::Dispatcher& dispatcher)
     : std::enable_shared_from_this<Wasm>(wasm), cluster_manager_(wasm.cluster_manager_),
-      dispatcher_(wasm.dispatcher_), scope_(wasm.scope_),
+      dispatcher_(dispatcher), scope_(wasm.scope_),
       time_source_(dispatcher.timeSystem()), 
       owned_scope_(wasm.owned_scope_) {
   wasm_vm_ = wasm.wasmVm()->clone();
