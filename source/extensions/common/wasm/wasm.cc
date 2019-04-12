@@ -487,7 +487,7 @@ uint32_t _pthread_equalHandler(void*, uint32_t,
   return 0;
 }
 uint32_t _pthread_mutex_destroyHandler(void*, uint32_t) {
-  throw WasmException("emscripten pthread_mutex_destroy");
+  // throw WasmException("emscripten pthread_mutex_destroy");
   return 0;
 }
 uint32_t _pthread_cond_waitHandler(void*, uint32_t) {
