@@ -555,15 +555,15 @@ public:
                                 WasmCallback5Int f) PURE;
   virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
                                 WasmCallback9Int f) PURE;
-  virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
-                                WasmCallback_mj f) PURE;
 
   virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
                                 WasmCallback_Zjl f) PURE;
   virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
                                 WasmCallback_Zjm f) PURE;
   virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
-                                WasmCallback_mjj f) PURE;
+                                WasmCallback_mjj f) PURE;  
+  virtual void registerCallback(absl::string_view moduleName, absl::string_view functionName,
+                                WasmCallback_mj f) PURE;
 
   // Register typed value exported by the host environment.
   virtual std::unique_ptr<Global<double>>
